@@ -4,6 +4,9 @@ import com.yanela.demo.domain.dto.IslandDto;
 import com.yanela.demo.domain.entity.Island;
 import com.yanela.demo.mappers.Mapper;
 import com.yanela.demo.service.IslandService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/demo/islands")
+@Tag(name = "Islands")
 public class IslandController {
 
 	@Autowired
@@ -21,7 +26,17 @@ public class IslandController {
 	@Autowired
 	private Mapper<Island, IslandDto> islandMapper;
 
-	@GetMapping(path = "/islands")
+	@Operation(
+			description = "Get all islands",
+			summary = "Get all islands",
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "OK"
+					)
+			}
+	)
+	@GetMapping
 	public List<IslandDto> getIslands() {
 		List<Island> islands = islandService.getIslands();
 		return islands.stream()
@@ -29,7 +44,21 @@ public class IslandController {
 				.toList();
 	}
 
-	@GetMapping(path = "/islands/{id}")
+	@Operation(
+			description = "Get island by ID",
+			summary = "Get island by ID",
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "OK"
+					),
+					@ApiResponse(
+							responseCode = "404",
+							description = "Not Found"
+					)
+			}
+	)
+	@GetMapping(path = "/{id}")
 	public ResponseEntity<IslandDto> getIsland(@PathVariable("id") Long id) {
 		Optional<Island> foundIsland = islandService.getIsland(id);
 		return foundIsland.map(island -> {
@@ -38,7 +67,17 @@ public class IslandController {
 		}).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@PostMapping(path = "/islands")
+	@Operation(
+			description = "Create new island",
+			summary = "Create new island",
+			responses = {
+					@ApiResponse(
+							responseCode = "201",
+							description = "Created"
+					)
+			}
+	)
+	@PostMapping
 	public ResponseEntity<IslandDto> createIsland(@RequestBody IslandDto islandDto) {
 		Island island = islandMapper.mapFrom(islandDto);
 		Island savedIsland = islandService.createIsland(island);
@@ -47,7 +86,21 @@ public class IslandController {
 				HttpStatus.CREATED);
 	}
 
-	@PutMapping(path = "/islands/{id}")
+	@Operation(
+			description = "Update an island by ID",
+			summary = "Update an island by ID",
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "OK"
+					),
+					@ApiResponse(
+							responseCode = "404",
+							description = "Not Found"
+					)
+			}
+	)
+	@PutMapping(path = "/{id}")
 	public ResponseEntity<IslandDto> fullUpdateIsland(
 			@PathVariable("id") Long id,
 			@RequestBody IslandDto islandDto) {
@@ -63,7 +116,21 @@ public class IslandController {
 				HttpStatus.OK);
 	}
 
-	@PatchMapping(path = "/islands/{id}")
+	@Operation(
+			description = "Update some attributes of an island by ID",
+			summary = "Update some attributes of an island by ID",
+			responses = {
+					@ApiResponse(
+							responseCode = "200",
+							description = "OK"
+					),
+					@ApiResponse(
+							responseCode = "404",
+							description = "Not Found"
+					)
+			}
+	)
+	@PatchMapping(path = "/{id}")
 	public ResponseEntity<IslandDto> partialUpdateIsland(
 			@PathVariable("id") Long id,
 			@RequestBody IslandDto islandDto) {
@@ -78,7 +145,21 @@ public class IslandController {
 				HttpStatus.OK);
 	}
 
-	@DeleteMapping(path = "/islands/{id}")
+	@Operation(
+			description = "Delete island by ID",
+			summary = "Delete island by ID",
+			responses = {
+					@ApiResponse(
+							responseCode = "204",
+							description = "No Content"
+					),
+					@ApiResponse(
+							responseCode = "404",
+							description = "Not Found"
+					)
+			}
+	)
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity deleteIsland(@PathVariable("id") Long id) {
 		if (!islandService.islandExists(id)) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
