@@ -38,7 +38,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/animals")
+				MockMvcRequestBuilders.post("/demo/animals")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(
@@ -52,7 +52,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/animals")
+				MockMvcRequestBuilders.post("/demo//animals")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(
@@ -65,7 +65,7 @@ public class AnimalControllerIntegrationTests {
 	@Test
 	public void testThatGetAnimalsReturnsHttpStatus200Ok() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/animals")
+				MockMvcRequestBuilders.get("/demo/animals")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -76,12 +76,12 @@ public class AnimalControllerIntegrationTests {
 		animalService.createAnimal(animal);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/animals")
+				MockMvcRequestBuilders.get("/demo/animals")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(
-				MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
+				MockMvcResultMatchers.jsonPath("$.content[0].id").isNumber()
 		).andExpect(
-				MockMvcResultMatchers.jsonPath("$[0].name").value("Tom Nook")
+				MockMvcResultMatchers.jsonPath("$.content[0].name").value("Tom Nook")
 		);
 	}
 
@@ -91,7 +91,7 @@ public class AnimalControllerIntegrationTests {
 		animalService.createAnimal(animal);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/animals/1")
+				MockMvcRequestBuilders.get("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -99,7 +99,7 @@ public class AnimalControllerIntegrationTests {
 	@Test
 	public void testThatGetAnimalReturnsHttpStatus404WhenNoAnimalExist() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/animals/1")
+				MockMvcRequestBuilders.get("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
@@ -110,7 +110,7 @@ public class AnimalControllerIntegrationTests {
 		animalService.createAnimal(animal);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/animals/1")
+				MockMvcRequestBuilders.get("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(
 				MockMvcResultMatchers.jsonPath("$.id").value(1)
@@ -128,7 +128,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/animals/" + savedAnimal.getId())
+				MockMvcRequestBuilders.put("/demo/animals/" + savedAnimal.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(MockMvcResultMatchers.status().isOk());
@@ -140,7 +140,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/animals/99")
+				MockMvcRequestBuilders.put("/demo/animals/99")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -156,7 +156,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/animals/" + savedAnimal.getId())
+				MockMvcRequestBuilders.put("/demo/animals/" + savedAnimal.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(
@@ -176,7 +176,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/animals/" + savedAnimal.getId())
+				MockMvcRequestBuilders.patch("/demo/animals/" + savedAnimal.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(MockMvcResultMatchers.status().isOk());
@@ -189,7 +189,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/animals/1")
+				MockMvcRequestBuilders.patch("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -206,7 +206,7 @@ public class AnimalControllerIntegrationTests {
 		String animalJson = objectMapper.writeValueAsString(animalDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/animals/" + savedAnimal.getId())
+				MockMvcRequestBuilders.patch("/demo/animals/" + savedAnimal.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(animalJson)
 		).andExpect(
@@ -222,7 +222,7 @@ public class AnimalControllerIntegrationTests {
 		animalService.createAnimal(animal);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.delete("/animals/1")
+				MockMvcRequestBuilders.delete("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
@@ -230,7 +230,7 @@ public class AnimalControllerIntegrationTests {
 	@Test
 	public void testThatDeleteAnimalReturnsHttpStatus404WhenNoAnimalExist() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.delete("/animals/1")
+				MockMvcRequestBuilders.delete("/demo/animals/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}

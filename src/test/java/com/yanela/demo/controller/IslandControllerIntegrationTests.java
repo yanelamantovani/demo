@@ -39,7 +39,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandA);
 		
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/islands")
+				MockMvcRequestBuilders.post("/demo/islands")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(
@@ -54,7 +54,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandA);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/islands")
+				MockMvcRequestBuilders.post("/demo/islands")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(
@@ -69,7 +69,7 @@ public class IslandControllerIntegrationTests {
 	@Test
 	public void testThatGetIslandsReturnsHttpStatus200Ok() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/islands")
+				MockMvcRequestBuilders.get("/demo/islands")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -80,7 +80,7 @@ public class IslandControllerIntegrationTests {
 		islandService.createIsland(island);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/islands")
+				MockMvcRequestBuilders.get("/demo/islands")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(
 				MockMvcResultMatchers.jsonPath("$[0].id").isNumber()
@@ -97,7 +97,7 @@ public class IslandControllerIntegrationTests {
 		islandService.createIsland(island);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/islands/1")
+				MockMvcRequestBuilders.get("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -105,7 +105,7 @@ public class IslandControllerIntegrationTests {
 	@Test
 	public void testThatGetIslandReturnsHttpStatus404WhenNoIslandExist() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/islands/1")
+				MockMvcRequestBuilders.get("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
@@ -116,7 +116,7 @@ public class IslandControllerIntegrationTests {
 		islandService.createIsland(island);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.get("/islands/1")
+				MockMvcRequestBuilders.get("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(
 				MockMvcResultMatchers.jsonPath("$.id").value(1)
@@ -136,7 +136,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/islands/" + savedIsland.getId())
+				MockMvcRequestBuilders.put("/demo/islands/" + savedIsland.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(MockMvcResultMatchers.status().isOk());
@@ -148,7 +148,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/islands/1")
+				MockMvcRequestBuilders.put("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -164,7 +164,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.put("/islands/" + savedIsland.getId())
+				MockMvcRequestBuilders.put("/demo/islands/" + savedIsland.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(
@@ -190,7 +190,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/islands/" + savedIsland.getId())
+				MockMvcRequestBuilders.patch("/demo/islands/" + savedIsland.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(MockMvcResultMatchers.status().isOk());
@@ -203,7 +203,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/islands/1")
+				MockMvcRequestBuilders.patch("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -220,7 +220,7 @@ public class IslandControllerIntegrationTests {
 		String islandJson = objectMapper.writeValueAsString(islandDto);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.patch("/islands/" + savedIsland.getId())
+				MockMvcRequestBuilders.patch("/demo/islands/" + savedIsland.getId())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(islandJson)
 		).andExpect(
@@ -241,7 +241,7 @@ public class IslandControllerIntegrationTests {
 		islandService.createIsland(island);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.delete("/islands/1")
+				MockMvcRequestBuilders.delete("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
@@ -249,7 +249,7 @@ public class IslandControllerIntegrationTests {
 	@Test
 	public void testThatDeleteIslandReturnsHttpStatus404WhenNoIslandExist() throws Exception {
 		mockMvc.perform(
-				MockMvcRequestBuilders.delete("/islands/1")
+				MockMvcRequestBuilders.delete("/demo/islands/1")
 						.contentType(MediaType.APPLICATION_JSON)
 		).andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
